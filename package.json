@@ -12,6 +12,9 @@
         "type": "git",
         "url": "git+https://github.com/weiwenzhou/Qulin_WEIWEZHOU_CSE316_FinalProject.git"
     },
+    "scripts": {
+        "start": "node app.js"
+    },
     "engines": {
         "node": ">=8.0.0"
     },
