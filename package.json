@@ -1,0 +1,15 @@
+{
+    "name": "final-project-316",
+    "version": "1.0.0",
+    "description": "A web interface for Stony Brook COVID-19 Testing",
+    "main": "app.js",
+    "contributors": ["Queeny Lin", "Wei Wen Zhou"],
+    "license": "ISC",
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql": "^2.18.1"
+    }
+}
