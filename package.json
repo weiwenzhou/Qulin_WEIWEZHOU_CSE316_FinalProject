@@ -3,8 +3,15 @@
     "version": "1.0.0",
     "description": "A web interface for Stony Brook COVID-19 Testing",
     "main": "app.js",
-    "contributors": ["Queeny Lin", "Wei Wen Zhou"],
+    "contributors": [
+        "Queeny Lin",
+        "Wei Wen Zhou"
+    ],
     "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/weiwenzhou/Qulin_WEIWEZHOU_CSE316_FinalProject.git"
+    },
     "engines": {
         "node": ">=8.0.0"
     },
