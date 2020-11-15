@@ -1,6 +1,9 @@
 # package-lock.json
 package-lock.json
 
+# Config
+db.config.js
+
 # Logs
 logs
 *.log
