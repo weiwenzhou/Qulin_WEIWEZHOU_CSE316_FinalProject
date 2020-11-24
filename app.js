@@ -2,8 +2,8 @@ const express = require("express")
 const app = express()
 
 // Backend routes
-const routes = require('./routes/routes.js');
-app.use('/api', routes)
+require('./routes/routes.js')(app)
+// app.use(routes)
 
 app.use(express.static('client/build'))
 // connection with client setup
