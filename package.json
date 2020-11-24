@@ -18,7 +18,8 @@
         "client": "cd client && npm start",
         "dev": "concurrently -n \"npm run server\" \"npm run client\"",
         "installDependencies": "npm install && cd client && npm install",
-        "auditDependencies": "npm audit fix && cd client && npm audit fix"
+        "auditDependencies": "npm audit fix && cd client && npm audit fix",
+        "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "engines": {
         "node": ">=8.0.0"
