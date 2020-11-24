@@ -16,7 +16,9 @@
         "start": "node app.js",
         "server": "nodemon app.js",
         "client": "cd client && npm start",
-        "dev": "concurrently -n \"npm run server\" \"npm run client\""
+        "dev": "concurrently -n \"npm run server\" \"npm run client\"",
+        "installDependencies": "npm install && cd client && npm install",
+        "auditDependencies": "npm audit fix && cd client && npm audit fix"
     },
     "engines": {
         "node": ">=8.0.0"
