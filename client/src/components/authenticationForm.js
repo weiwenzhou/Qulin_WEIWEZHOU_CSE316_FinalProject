@@ -11,6 +11,10 @@ class authenticationForm extends Component {
         this.updateForm = (e) => {
             this.setState({[e.target.name]: e.target.value});
         }
+
+        this.submit = () => {
+            
+        }
     }
 
     render() {
