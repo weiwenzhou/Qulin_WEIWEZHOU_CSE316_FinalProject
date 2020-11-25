@@ -12,15 +12,18 @@ class authenticationForm extends Component {
             this.setState({[e.target.name]: e.target.value});
         }
 
-        this.submit = () => {
-            
-        }
+        this.submit = (e) => {
+            e.preventDefault();
+            fetch("/labtech")
+            .then(response => response.json())
+            .then(data => console.log(data));
+        };
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.submit()}>
+                <form onSubmit={e => this.submit(e)}>
                 <label>Lab ID:</label>
                 <input type="text" name="id" value={this.state.id} onChange={e => this.updateForm(e)} id="id" required/>
                 <label>Password:</label>
