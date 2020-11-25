@@ -1,9 +1,10 @@
 import { Switch, Route } from 'react-router-dom';
+const Login = require("./pages/login").default;
 
 const Routes = () => {
     return <Switch>
         <Route exact path="/">Index</Route>
-        <Route exact path="/labtech">Lab login page</Route>
+        <Route exact path="/labtech" component={Login} />
         
         <Route exact path="/employee">Employee login page</Route>
         <Route exact path="/employee/:userId">Showing homepage for employee</Route>
