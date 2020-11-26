@@ -1,13 +1,14 @@
 const mysql = require('mysql');
-const express = require("express")
-const app = express()
+const express = require("express");
+const app = express();
 const cors = require('cors');
 
 const dbConfig = require("./db.config.js");
+const routes = require("./routes/routes")
 
 //cors enable
 app.options('*', cors());
-app.use(cors({ origin: 'http://localhost:5000' }));
+app.use(cors({ origin: 'http://localhost:8000' }));
 
 // Get post body
 app.use(express.json());
@@ -47,57 +48,11 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
+// API routes
+app.use("/api", routes);
+
 // PORT
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`)
 })
-
-//lab tech login page
-app.get("/labtech", (req, res) => { 
-    // let query = url.parse(req.url, true).query;
-    let sql = `SELECT * FROM registered 
-        WHERE labID = ` + req.body.labId + ` 
-        AND password =` + req.body.password;
-    con.query(sql, function(err, result) {
-        if (err) throw err;
-        if (result.length === 0) {
-            res.sendStatus(404);
-        }
-        else {
-            res.sendStatus(200);
-        }
-        res.close()
-    })
-})
-
-//employee login page
-app.get("/employee", (req, res) => {
-    
-})
-
-//lab home
-app.get("/labhome", (req, res) => {
-    
-})
-
-//test collection
-app.get("/testcollection", (req, res) => {
-    
-})
-
-//pool mapping
-app.get("/poolmapping", (req, res) => {
-    
-})
-
-//well testing
-app.get("/welltesting", (req, res) => {
-    
-})
-
-//employee results page
-app.get("/employee_results", (req, res) => {
-    
-})
-
