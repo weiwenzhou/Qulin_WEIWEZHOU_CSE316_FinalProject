@@ -1,37 +1,52 @@
-// module.exports = app => {
+const express = require("express");
+const app = express.Router();
+
+//lab tech login page
+app.get("/labtech", (req, res) => { 
+    // let query = url.parse(req.url, true).query;
+    let sql = `SELECT * FROM registered 
+        WHERE labID = ` + req.body.labId + ` 
+        AND password =` + req.body.password;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        if (result.length === 0) {
+            res.sendStatus(404);
+        }
+        else {
+            res.sendStatus(200);
+        }
+        res.close()
+    })
+})
+
+//employee login page
+app.get("/employee", (req, res) => {
+    res.send("temp to be deleted");
+})
+
+//lab home
+app.get("/labhome", (req, res) => {
     
-//     // Lab tech Login Page
-//     app.get('/labtech', (req, res) => {
-//         res.send("Lab login page.")
-//     })
+})
 
-//     // Employee Login Page
-//     app.get('/employee', (req, res) => {
-//         res.send("Employee login page.")
-//     })
+//test collection
+app.get("/testcollection", (req, res) => {
+    
+})
 
-//     // Employee Home Page
-//     app.get('/employee/:userId', (req, res) => {
-//         res.send(`Showing homepage for employee ${req.params.userId}`)
-//     })
+//pool mapping
+app.get("/poolmapping", (req, res) => {
+    
+})
 
-//     // Test Collection Page
-//     app.get('/collection/:userId', (req, res) => {
-//         res.send(`Test Collection page for employee ${req.params.userId}`)
-//     })
+//well testing
+app.get("/welltesting", (req, res) => {
+    
+})
 
-//     // Lab Home Page
-//     app.get('/lab/:userId', (req, res) => {
-//         res.send(`Lab Home page for employee ${req.params.userId}`)
-//     })
+//employee results page
+app.get("/employee_results", (req, res) => {
+    
+})
 
-//     // Pool Mapping Page
-//     app.get('/pool/:userId', (req, res) => {
-//         res.send(`Pool Mapping page for employee ${req.params.userId}`)
-//     })
-
-//     // Well Testing Page
-//     app.get('/well/:userId', (req, res) => {
-//         res.send(`Well Testing page for employee ${req.params.userId}`)
-//     })
-// }
+module.exports = app;
