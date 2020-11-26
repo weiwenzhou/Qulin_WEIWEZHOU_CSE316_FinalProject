@@ -4,9 +4,7 @@ const app = express.Router();
 //lab tech login page
 app.get("/labtech", (req, res) => { 
     // let query = url.parse(req.url, true).query;
-    let sql = `SELECT * FROM registered 
-        WHERE labID = ` + req.body.labId + ` 
-        AND password =` + req.body.password;
+    let sql = `SELECT * FROM registered WHERE labID = ${req.body.id} AND password = ${req.body.password}`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         if (result.length === 0) {
