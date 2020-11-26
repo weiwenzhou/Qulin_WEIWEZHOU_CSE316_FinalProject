@@ -1,39 +1,39 @@
-var mysql = require('mysql');
-var con = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "password",
-    database: "finalProj_db"
-});
-
-const dbConfig = require("../config/db.config.js");
-
-var connection = mysql.createConnection({
-  host: dbConfig.HOST,
-  user: dbConfig.USER,
-  password: dbConfig.PASSWORD,
-  database: dbConfig.DB
-});
-
+const mysql = require('mysql');
 const express = require("express")
 const app = express()
-const url = require('url');
+const cors = require('cors');
 
+const dbConfig = require("./db.config.js");
 
+//cors enable
+app.options('*', cors());
+app.use(cors({ origin: 'http://localhost:5000' }));
 
-// con.connect((err) => {
-//     if (err) throw err;
-//     else {
-//         console.log("connected");
-//     }
-// })
+// Get post body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// // Backend routes
-// require('./routes/routes.js')(app)
-// // app.use(routes)
+// Database connection
+let con =  null;
+if (process.env.NODE_ENV === 'production') {
+    con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+} else {
+    con = mysql.createConnection({
+        host: dbConfig.HOST,
+        user: dbConfig.USER,
+        password: dbConfig.PASSWORD,
+        database: dbConfig.DB
+    });
+}
+// Ping the database
+con.connect((err) => {
+    if (err) throw err;
+    else {
+        console.log("connected");
+    }
+})
+global.con = con;
 
-app.use(express.static('client/build'))
 // connection with client setup
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
@@ -47,9 +47,7 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-
+// PORT
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`)
