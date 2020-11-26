@@ -7,8 +7,9 @@ const dbConfig = require("./db.config.js");
 const routes = require("./routes/routes")
 
 //cors enable
-app.options('*', cors());
-app.use(cors({ origin: 'http://localhost:8000' }));
+// app.options('*', cors());
+// app.use(cors({ origin: 'http://localhost:8000' }));
+app.use(cors());
 
 // Get post body
 app.use(express.json());
