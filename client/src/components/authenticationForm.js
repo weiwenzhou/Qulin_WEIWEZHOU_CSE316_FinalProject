@@ -1,4 +1,4 @@
-import React, { Component, useState} from 'react';
+import React, { Component } from 'react';
 
 class authenticationForm extends Component {
     constructor(props) {
@@ -14,9 +14,12 @@ class authenticationForm extends Component {
 
         this.submit = (e) => {
             e.preventDefault();
-            fetch("/labtech")
-            .then(response => response.json())
-            .then(data => console.log(data));
+            fetch("http://localhost:8000/api/employee", {
+                method: "POST",
+                body: this.state
+            }).then(response => {
+                console.log(response);
+            }).then(data => console.log(data));
         };
     }
 
