@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 
-const dbConfig = require("./db.config.js");
 const routes = require("./routes/routes")
 
 //cors enable
@@ -20,6 +19,7 @@ let con =  null;
 if (process.env.NODE_ENV === 'production') {
     con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
 } else {
+    const dbConfig = require("./db.config.js");
     con = mysql.createConnection({
         host: dbConfig.HOST,
         user: dbConfig.USER,
