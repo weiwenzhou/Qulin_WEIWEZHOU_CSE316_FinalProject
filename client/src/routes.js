@@ -13,7 +13,7 @@ const Routes = () => {
         <Route exact path="/employee/:userId">Showing homepage for employee</Route>
         
         <Route exact path="/lab/:userId" component={Homepage} />
-        <Route exact path="/collection/:userId">Test Collection page for employee </Route>
+        <Route exact path="/collection/:userId" component={TestCollection} />
         <Route exact path="/pool/:userId">Pool Mapping page for employee</Route>
         <Route exact path="/well/:userId">Well Testing page for employee</Route>
     </Switch>
