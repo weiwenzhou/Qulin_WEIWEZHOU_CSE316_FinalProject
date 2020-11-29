@@ -30,9 +30,9 @@ if (process.env.NODE_ENV === 'production') {
 // Ping the database
 con.connect((err) => {
     // if (err) throw err;
-    else {
-        console.log("connected");
-    }
+    // else {
+    //     console.log("connected");
+    // }
 })
 global.con = con;
 
