@@ -1,5 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
 const Login = require("./pages/login").default;
+const Result = require("./pages/result").default;
 const HomePage = require("./pages/homepage").default;
 const TestCollection = require("./pages/testCollection").default;
 
@@ -9,7 +10,7 @@ const Routes = () => {
         <Route exact path="/labtech" render={(props) => <Login labtech={true} {...props} />} />
         
         <Route exact path="/employee" render={(props) => <Login labtech={false} {...props} />} />
-        <Route exact path="/employee/:userId">Showing homepage for employee</Route>
+        <Route exact path="/employee/:userId" component={Result} />
         
         <Route exact path="/lab/:userId" component={HomePage} />
         <Route exact path="/collection/:userId" component={TestCollection} />
