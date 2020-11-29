@@ -4,9 +4,9 @@ const Login = require("./pages/login").default;
 const Routes = () => {
     return <Switch>
         <Route exact path="/">Index</Route>
-        <Route exact path="/labtech" component={Login} />
+        <Route exact path="/labtech" ><Login labtech={true} /></Route>
         
-        <Route exact path="/employee">Employee login page</Route>
+        <Route exact path="/employee"><Login labtech={false} /></Route>
         <Route exact path="/employee/:userId">Showing homepage for employee</Route>
         <Route exact path="/collection/:userId">Test Collection page for employee </Route>
         
