@@ -6,7 +6,7 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <AuthForm action="LabTech Login Page" parent = {this.props}/>
+                <AuthForm action={this.props.labtech ? "LabTech Login Page": "Employee Login Page"} parent = {this.props}/>
             </div>
         );
     }
