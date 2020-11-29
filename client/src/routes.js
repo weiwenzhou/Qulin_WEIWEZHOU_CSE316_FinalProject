@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-const Login = require("./pages/Login").default;
+const Login = require("./pages/login").default;
 
 const Routes = () => {
     return <Switch>
