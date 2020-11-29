@@ -1,16 +1,19 @@
 import { Switch, Route } from 'react-router-dom';
+import Homepage from './pages/homepage';
 const Login = require("./pages/login").default;
+const HomePage = require("./pages/homepage").default;
+const TestCollection = require("./pages/testCollection").default;
 
 const Routes = () => {
     return <Switch>
         <Route exact path="/">Index</Route>
-        <Route exact path="/labtech" ><Login labtech={true} /></Route>
+        <Route exact path="/labtech" render={(props) => <Login labtech={true} {...props} />} />
         
-        <Route exact path="/employee"><Login labtech={false} /></Route>
+        <Route exact path="/employee" render={(props) => <Login labtech={false} {...props} />} />
         <Route exact path="/employee/:userId">Showing homepage for employee</Route>
-        <Route exact path="/collection/:userId">Test Collection page for employee </Route>
         
-        <Route exact path="/lab/:userId">Lab Home page for employee</Route>
+        <Route exact path="/lab/:userId" component={Homepage} />
+        <Route exact path="/collection/:userId">Test Collection page for employee </Route>
         <Route exact path="/pool/:userId">Pool Mapping page for employee</Route>
         <Route exact path="/well/:userId">Well Testing page for employee</Route>
     </Switch>
