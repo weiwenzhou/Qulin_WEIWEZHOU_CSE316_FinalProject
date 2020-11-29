@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 
 const AuthForm = require('../components/authenticationForm').default;
 
-class login extends Component {
+class Login extends Component {
     render() {
         return (
             <div>
-                <h2>Login Page</h2>
-                <AuthForm />
+                <AuthForm action="LabTech Login Page" parent = {this.props}/>
             </div>
         );
     }
 }
 
-export default login;
+export default Login;
