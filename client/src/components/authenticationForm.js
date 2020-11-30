@@ -14,17 +14,25 @@ class authenticationForm extends Component {
 
         this.submit = (e) => {
             e.preventDefault();
-            // fetch("http://localhost:8000/api/employee", {
-            //     method: "POST",
-            //     body: this.state
-            // }).then(response => {
-            //     console.log(response);
-            // }).then(data => console.log(data));
-            if (this.props.action === "LabTech Login Page") {
-                this.props.parent.history.push("/lab/1");
-            } else {
-                this.props.parent.history.push("/employee/1");
-            }
+            fetch("http://localhost:8000/api"+((this.props.action === "LabTech Login Page") ? "/labtech":"/employee"), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(this.state)
+            }).then(response => {
+                if (response.status === 200) {
+                    if (this.props.action === "LabTech Login Page") {
+                        this.props.parent.history.push("/lab/1");
+                    } else {
+                        this.props.parent.history.push("/employee/1");
+                    }
+                } else {
+                    alert("Invalid username or password.");
+                    this.setState({"id":""});
+                    this.setState({"password":""});
+                }
+            });
         };
     }
 
