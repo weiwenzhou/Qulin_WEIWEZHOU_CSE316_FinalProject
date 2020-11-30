@@ -3,12 +3,12 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 
-const dbConfig = require("./db.config.js");
 const routes = require("./routes/routes")
 
 //cors enable
-app.options('*', cors());
-app.use(cors({ origin: 'http://localhost:8000' }));
+// app.options('*', cors());
+// app.use(cors({ origin: 'http://localhost:8000' }));
+app.use(cors());
 
 // Get post body
 app.use(express.json());
@@ -19,6 +19,7 @@ let con =  null;
 if (process.env.NODE_ENV === 'production') {
     con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
 } else {
+    const dbConfig = require("./db.config.js");
     con = mysql.createConnection({
         host: dbConfig.HOST,
         user: dbConfig.USER,
@@ -27,12 +28,12 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 // Ping the database
-con.connect((err) => {
-    if (err) throw err;
-    else {
-        console.log("connected");
-    }
-})
+// con.connect((err) => {
+//     if (err) throw err;
+//     else {
+//         console.log("connected");
+//     }
+// })
 global.con = con;
 
 // connection with client setup
