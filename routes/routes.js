@@ -2,9 +2,10 @@ const express = require("express");
 const app = express.Router();
 
 //lab tech login page
-app.get("/labtech", (req, res) => { 
+app.post("/labtech", (req, res) => { 
     // let query = url.parse(req.url, true).query;
-    let sql = `SELECT * FROM registered WHERE labID = ${req.body.id} AND password = ${req.body.password}`;
+    console.log(req.body);
+    let sql = `SELECT * FROM labemployee WHERE labID = '${req.body.id}' AND password = '${req.body.password}'`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         if (result.length === 0) {
@@ -13,7 +14,6 @@ app.get("/labtech", (req, res) => {
         else {
             res.sendStatus(200);
         }
-        res.close()
     })
 })
 
