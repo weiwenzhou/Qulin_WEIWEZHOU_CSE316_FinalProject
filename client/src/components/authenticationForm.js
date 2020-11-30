@@ -23,9 +23,9 @@ class authenticationForm extends Component {
             }).then(response => {
                 if (response.status === 200) {
                     if (this.props.action === "LabTech Login Page") {
-                        this.props.parent.history.push("/lab/1");
+                        this.props.parent.history.push("/lab/"+this.state.id);
                     } else {
-                        this.props.parent.history.push("/employee/1");
+                        this.props.parent.history.push("/employee/"+this.state.id);
                     }
                 } else {
                     alert("Invalid username or password.");
