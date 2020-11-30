@@ -57,7 +57,7 @@ class testCollection extends Component {
                         </thead>
                         <tbody>
                             {this.state.tests.map((row) => {
-                                return (<tr>
+                                return (<tr key={row.testBarcode}>
                                     <td>{row.employeeID}</td>
                                     <td>{row.testBarcode}</td>
                                 </tr>)
