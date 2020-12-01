@@ -6,7 +6,7 @@ class testCollection extends Component {
         this.state = {
             employeeID: "",
             testBarcode: "",
-            tests: [{employeeID: 111, testBarcode: 123}],
+            tests: [],
         }
         
         this.onChange = (e) => {
@@ -41,10 +41,18 @@ class testCollection extends Component {
 
         this.getTests = () => {
             // fetch to backend to get the tests in the table
-        }
+            fetch("http://localhost:8000/api/testcollection")
+                .then(response => response.json())
+                .then(data => this.setState({tests: data}));
 
+            console.log(this.state.tests);
+        }
     }
     
+    componentDidMount() {
+        this.getTests();
+    }
+
     render() {
         return (
             <div>
@@ -63,6 +71,7 @@ class testCollection extends Component {
                     </form>
                 </div>
                 <div>
+                    <button onClick={this.getTests}>Update</button>
                     <center>
                     <table>
                         <thead>
@@ -73,9 +82,9 @@ class testCollection extends Component {
                         </thead>
                         <tbody>
                             {this.state.tests.map((row) => {
-                                return (<tr key={row.testBarcode}>
+                                return (<tr key={row.testBarCode}>
                                     <td>{row.employeeID}</td>
-                                    <td>{row.testBarcode}</td>
+                                    <td>{row.testBarCode}</td>
                                 </tr>)
                             })}
                         </tbody>        
