@@ -14,12 +14,16 @@ class authenticationForm extends Component {
 
         this.submit = (e) => {
             e.preventDefault();
+            let body = JSON.stringify(this.state);
+            if (this.props.action !== "LabTech Login Page") {
+                body = body.replace("id", "email");
+            }
             fetch("http://localhost:8000/api"+((this.props.action === "LabTech Login Page") ? "/labtech":"/employee"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(this.state)
+                body: body
             }).then(response => {
                 if (response.status === 200) {
                     if (this.props.action === "LabTech Login Page") {
@@ -44,11 +48,11 @@ class authenticationForm extends Component {
                 </div>
                 <form onSubmit={e => this.submit(e)}>
                 <div>
-                    <label>Lab ID :</label>
+                    <label>{this.props.action === "LabTech Login Page" ? "Lab ID: ":"Email: "}</label>
                     <input type="text" name="id" value={this.state.id} onChange={e => this.updateForm(e)} id="id" required/>
                 </div>
                 <div>
-                    <label>Password :</label>
+                    <label>Password: </label>
                     <input type="password" name="password" value={this.state.password} onChange={e => this.updateForm(e)} id="password" required/>
                 </div>
                 <button>Submit</button>
