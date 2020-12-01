@@ -15,6 +15,22 @@ class testCollection extends Component {
 
         this.add = (e) => {
             e.preventDefault();
+            console.log(this.props);
+            let body = {
+                employeeID: this.state.employeeID,
+                testBarcode: this.state.testBarcode,
+                labID: this.props.match.params.userId
+            }
+            body = JSON.stringify(body);
+            fetch("http://localhost:8000/api/testcollection", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: body
+            }).then(response => {
+                console.log(response);
+            });
             // fetch to backend to add
         }
 
