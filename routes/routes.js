@@ -33,7 +33,6 @@ app.get("/employee", (req, res) => {
         else {
             res.sendStatus(200);
         }
-        // res.close()
     })
 })
 
@@ -42,7 +41,7 @@ app.post("/testcollection", (req, res) => {
     let sql = `INSERT INTO employeetest 
             (testBarcode, employeeID, collectionTime, collectedBy)
         SELECT * FROM 
-            (SELECT '${req.body.testBarcode}', '${req.body.employeeID}', CURDATE(), '${req.body.labID}')  
+            (SELECT '${req.body.testBarcode}', '${req.body.employeeID}', CURDATE(), '${req.body.labID}') as tmp  
             WHERE NOT EXISTS (
                 SELECT testBarcode FROM employeetest WHERE testBarcode ='${req.body.testBarcode}') LIMIT 1`;
     con.query(sql, function(err, result) {
@@ -53,7 +52,6 @@ app.post("/testcollection", (req, res) => {
             res.send(result);
         })
     })
-    // res.close();
 })
 app.delete("/testcollection", (req, res) => {
     let sql = `DELETE FROM employeetest 
@@ -66,7 +64,13 @@ app.delete("/testcollection", (req, res) => {
             res.send(result);
         })
     })
-    // res.close();
+})
+app.get("/testcollection", (req, res) => { 
+    let sql = `SELECT employeeID, testBarCode FROM employeetest`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
 })
 
 //pool mapping
@@ -81,7 +85,7 @@ app.get("/welltesting", (req, res) => {
 
 //employee results page
 app.get("/employee_results", (req, res) => {
-    let sql = `SELECT `;
+
 })
 
 module.exports = app;
