@@ -38,12 +38,14 @@ app.get("/employee", (req, res) => {
 
 //test collection
 app.post("/testcollection", (req, res) => {
-    let sql = `INSERT INTO employeetest 
-            (testBarcode, employeeID, collectionTime, collectedBy)
-        SELECT * FROM 
-            (SELECT '${req.body.testBarcode}', '${req.body.employeeID}', CURDATE(), '${req.body.labID}') as tmp  
-            WHERE NOT EXISTS (
-                SELECT testBarcode FROM employeetest WHERE testBarcode ='${req.body.testBarcode}') LIMIT 1`;
+    // let sql = `INSERT INTO employeetest 
+    //         (testBarcode, employeeID, collectionTime, collectedBy)
+    //     SELECT * FROM 
+    //         (SELECT '${req.body.testBarcode}', '${req.body.employeeID}', CURDATE(), '${req.body.labID}') as tmpa  
+    //         WHERE NOT EXISTS (
+    //             SELECT testBarcode FROM employeetest WHERE testBarcode ='${req.body.testBarcode}') as tmpb LIMIT 1`;
+    let sql = `INSERT IGNORE INTO employeetest (testBarcode, employeeID, collectionTime, collectedBy)
+        VALUES ('${req.body.testBarcode}', '${req.body.employeeID}', CURDATE(), '${req.body.labID}')`;            
     con.query(sql, function(err, result) {
         if (err) throw err;
         let sql = `SELECT employeeID, testBarCode FROM employeetest`;
@@ -79,8 +81,30 @@ app.get("/poolmapping", (req, res) => {
 })
 
 //well testing
-app.get("/welltesting", (req, res) => {
-    
+app.delete("/welltesting", (req, res) => {
+    let sql = `DELETE FROM welltesting 
+        WHERE welltesting = '${req.body.wellBarcode}`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+
+})
+// app.post("/welltesting", (req, res) => {
+//     let sql = `INSERT IGNORE INTO welltesting (poolBarcode, wellBarcode, result) 
+//         VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result} ')`;
+//     con.query(sql, function(err, result) {
+//         if (err) throw err;
+//         res.send(result);
+//     })
+// })
+app.post("/welltesting", (req, res) => {
+    let sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, result) 
+        VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result} ')`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
 })
 
 //employee results page
