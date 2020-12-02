@@ -6,6 +6,7 @@ class testCollection extends Component {
         this.state = {
             employeeID: "",
             testBarcode: "",
+            delete: "",
             tests: [],
         }
         
@@ -13,9 +14,9 @@ class testCollection extends Component {
             this.setState({[e.target.name]: e.target.value});
         }
 
-        this.add = (e) => {
+        this.add = async (e) => {
+            // fetch to backend to add
             e.preventDefault();
-            console.log(this.props);
             let body = {
                 employeeID: this.state.employeeID,
                 testBarcode: this.state.testBarcode,
@@ -28,24 +29,36 @@ class testCollection extends Component {
                     "Content-Type": "application/json"
                 },
                 body: body
-            }).then(response => {
-                console.log(response);
-            });
-            // fetch to backend to add
+            }).then(response => response.json())
+            .then(data => this.setState({tests: data}));
         }
 
-        this.delete = (e) => {
-            e.preventDefault();
+        this.delete = async () => {
             // fetch to backend to delete
+            if (this.state.delete !== "") {
+                let body = {
+                    testBarcode: this.state.delete,
+                }
+                body = JSON.stringify(body);
+                fetch("http://localhost:8000/api/testcollection", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: body
+                }).then(response => response.json())
+                .then(data => this.setState({tests: data}));
+                this.setState({delete: ""});
+            }
         }
 
-        this.getTests = () => {
+        this.getTests = async () => {
             // fetch to backend to get the tests in the table
             fetch("http://localhost:8000/api/testcollection")
                 .then(response => response.json())
                 .then(data => this.setState({tests: data}));
 
-            console.log(this.state.tests);
+            // console.log("stuff", this.state.tests);
         }
     }
     
@@ -83,12 +96,13 @@ class testCollection extends Component {
                         <tbody>
                             {this.state.tests.map((row) => {
                                 return (<tr key={row.testBarCode}>
-                                    <td>{row.employeeID}</td>
+                                    <td><input type="radio" name="delete" value={row.testBarCode} onChange={e => this.onChange(e)}></input>{row.employeeID}</td>
                                     <td>{row.testBarCode}</td>
                                 </tr>)
                             })}
                         </tbody>        
                     </table>
+                        <button onClick={this.delete}>Delete</button>
                     </center>
                 </div>
             </div>
