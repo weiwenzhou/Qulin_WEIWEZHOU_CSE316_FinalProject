@@ -113,6 +113,7 @@ class wellTesting extends Component {
                             })}
                         </tbody>        
                     </table>
+                        <button>Edit Button</button>
                         <button onClick={this.delete}>Delete</button>
                     </center>
                 </div>
