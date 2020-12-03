@@ -4,6 +4,7 @@ const Result = require("./pages/result").default;
 const HomePage = require("./pages/homepage").default;
 const TestCollection = require("./pages/testCollection").default;
 const PoolMapping = require("./pages/poolMapping").default;
+const WellTesting = require("./pages/wellTesting").default;
 
 const Routes = () => {
     return <Switch>
@@ -16,7 +17,7 @@ const Routes = () => {
         <Route exact path="/lab/:userId" component={HomePage} />
         <Route exact path="/collection/:userId" component={TestCollection} />
         <Route exact path="/pool/:userId" component={PoolMapping} />
-        <Route exact path="/well/:userId">Well Testing page for employee</Route>
+        <Route exact path="/well/:userId" component={WellTesting}/>
     </Switch>
 }
 
