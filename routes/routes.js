@@ -76,8 +76,21 @@ app.get("/testcollection", (req, res) => {
 })
 
 //pool mapping
-app.get("/poolmapping", (req, res) => {
-    
+app.post("/poolmapping", (req, res) => {
+    let sql = `REPLACE INTO poolMap (poolBarcode, testBarcode) 
+        VALUES ('${req.body.poolBarcode}', '${req.body.testBarcode}')`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+})
+app.delete("/poolmapping", (req, res) => {
+    let sql = `DELETE FROM poolMap 
+        WHERE poolBarcode = '${req.body.poolBarcode}`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
 })
 
 //well testing
@@ -88,7 +101,6 @@ app.delete("/welltesting", (req, res) => {
         if (err) throw err;
         res.send(result);
     })
-
 })
 // app.post("/welltesting", (req, res) => {
 //     let sql = `INSERT IGNORE INTO welltesting (poolBarcode, wellBarcode, result) 
