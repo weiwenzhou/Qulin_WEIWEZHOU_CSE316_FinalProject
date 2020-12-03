@@ -21,7 +21,7 @@ app.post("/labtech", (req, res) => {
 })
 
 //employee login page
-app.get("/employee", (req, res) => {
+app.post("/employee", (req, res) => {
     // res.send("temp to be deleted");
     let sql = `SELECT * FROM employee WHERE email = '${req.body.email}' AND password ='${req.body.password}'`;
     // empEmail = req.body.email;
