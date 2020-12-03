@@ -7,6 +7,8 @@ class pollMapping extends Component {
             pool: "",
             testBarcodes: {"0": ""},
             nextNum: 1,
+            table:  {}, 
+            delete: ""
         }
         
         this.onChange = (e) => {
@@ -51,7 +53,7 @@ class pollMapping extends Component {
                                 {Object.keys(this.state.testBarcodes).map((key) => {
                                     return (
                                         <div key={key}>
-                                            <input type="text" name={key} value={this.state.testBarcodes.key} id={key} onChange={e => this.updateBarcodes(e)}required />
+                                            <input type="text" name={key} value={this.state.testBarcodes[key]} id={key} onChange={e => this.updateBarcodes(e)}required />
                                             <button name={key} onClick={this.deleteRow}>Delete</button>
                                         </div>
                                     )
@@ -75,12 +77,12 @@ class pollMapping extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {this.state.tests.map((row) => {
-                                return (<tr key={row.testBarCode}>
-                                    <td><input type="radio" name="delete" value={row.testBarCode} onChange={e => this.onChange(e)}></input>{row.employeeID}</td>
-                                    <td>{row.testBarCode}</td>
+                            {Object.keys(this.state.table).map((key) => {
+                                return (<tr key={key}>
+                                    <td><input type="radio" name="delete" value={key} onChange={e => this.onChange(e)}></input>{key}</td>
+                                    <td>{this.state.table[key].join()}</td>
                                 </tr>)
-                            })} */}
+                            })}
                         </tbody>        
                     </table>
                         <button onClick={this.delete}>Delete Pool</button>
