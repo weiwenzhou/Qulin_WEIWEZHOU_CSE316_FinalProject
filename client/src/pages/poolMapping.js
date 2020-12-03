@@ -52,7 +52,7 @@ class pollMapping extends Component {
                 },
                 body: body
             }).then(response => response.json())
-            .then(data => this.setState({tests: data}));
+            .then(data => this.updateTable(data));
         }
 
         this.deletePool = async () => {
