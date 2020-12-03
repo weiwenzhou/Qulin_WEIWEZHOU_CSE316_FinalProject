@@ -143,6 +143,7 @@ class pollMapping extends Component {
                             })}
                         </tbody>        
                     </table>
+                        <button>Edit Pool</button>
                         <button onClick={this.delete}>Delete Pool</button>
                     </center>
                 </div>
