@@ -36,13 +36,71 @@ class pollMapping extends Component {
             delete prev[key];
             this.setState({testBarcodes: prev})
         }
+
+        this.submitPool = async (e) => {
+            // submit pool 
+            e.preventDefault();
+            let body = {
+                poolBarcode: this.state.pool,
+                testBarcodes: this.state.testBarcode.join()
+            }
+            body = JSON.stringify(body);
+            fetch("http://localhost:8000/api/testcollection", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: body
+            }).then(response => response.json())
+            .then(data => this.setState({tests: data}));
+        }
+
+        this.deletePool = async () => {
+            // delete pool
+            if (this.state.delete !== "") {
+                let body = {
+                    poolBarcode: this.state.delete,
+                }
+                body = JSON.stringify(body);
+                fetch("http://localhost:8000/api/poolmapping", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: body
+                }).then(response => response.json())
+                .then(data => this.updateTable(data));
+                this.setState({delete: ""});
+            }
+        }
+
+        this.getPools = async () => {
+            // get pools 
+            fetch("http://localhost:8000/api/poolmapping")
+                .then(response => response.json())
+                .then(data => this.updateTable(data));
+        }
+
+        this.updateTable = (array) => {
+            // data is an array of dictionary -> convert to dictonary
+            let updated = {};
+            for (let i = 0; i < array.length; i++) {
+                let row = array[i];
+                if (row.poolBarcode in updated) {
+                    updated[row.poolBarcode].push(row.testBarcode);
+                } else {
+                    updated[row.poolBarcode] = [row.testBarcode];
+                }
+            } 
+            this.setState({table: updated})
+        }
     }
     render() {
         return (
             <div>
                 <h2>Pool Mapping</h2>
                 <div>
-                    <form onSubmit={e => this.add(e)}>
+                    <form onSubmit={e => this.submitPool(e)}>
                         <div>
                             <label>Pool barcode: </label>
                             <input type="text" name="pool" value={this.state.pool} onChange={e => this.onChange(e)} id="pool" required/>
@@ -67,7 +125,7 @@ class pollMapping extends Component {
                     </form>
                 </div>
                 <div>
-                    <button onClick={this.getTests}>Update</button>
+                    <button onClick={this.getPools}>Update</button>
                     <center>
                     <table>
                         <thead>
