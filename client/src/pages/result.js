@@ -9,9 +9,16 @@ class Result extends Component {
 
         this.getResults = () => {
             // fetch for the results for the user
+            fetch("http://localhost:8000/api/employee_results?"+this.props.match.params.userId)
+                .then(response => response.json())
+                .then(data => this.setState({results: data}));
         }
     }
     
+    componentDidMount() {
+        this.getResults();
+    }
+
     render() {
         return (
             <div>
