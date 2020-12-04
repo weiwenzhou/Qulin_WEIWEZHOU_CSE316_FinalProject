@@ -21,7 +21,7 @@ app.post("/labtech", (req, res) => {
 })
 
 //employee login page
-app.post("/employee", (req, res) => {
+app.get("/employee", (req, res) => {
     // res.send("temp to be deleted");
     let sql = `SELECT * FROM employee WHERE email = '${req.body.email}' AND password ='${req.body.password}'`;
     // empEmail = req.body.email;
@@ -76,13 +76,20 @@ app.get("/testcollection", (req, res) => {
 })
 
 //pool mapping
+function strSplit(str) {
+    return str.split(",");
+}
 app.post("/poolmapping", (req, res) => {
-    let sql = `REPLACE INTO poolMap (poolBarcode, testBarcode) 
+    let str = req.body.testBarcode;
+    let arr = strSplit(str);
+    arr.array.forEach(element => {
+        let sql = `REPLACE INTO poolMap (poolBarcode, testBarcode) 
         VALUES ('${req.body.poolBarcode}', '${req.body.testBarcode}')`;
-    con.query(sql, function(err, result) {
-        if (err) throw err;
-        res.send(result);
-    })
+        con.query(sql, function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        })
+    });
 })
 app.delete("/poolmapping", (req, res) => {
     let sql = `DELETE FROM poolMap 
@@ -91,6 +98,14 @@ app.delete("/poolmapping", (req, res) => {
         if (err) throw err;
         res.send(result);
     })
+})
+app.get("/poolmapping", (req, res) => {
+    let sql = `SELECT * FROM poolMap`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+
 })
 
 //well testing
@@ -112,7 +127,7 @@ app.delete("/welltesting", (req, res) => {
 // })
 app.post("/welltesting", (req, res) => {
     let sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, result) 
-        VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result} ')`;
+        VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result} ');`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result);
@@ -121,7 +136,18 @@ app.post("/welltesting", (req, res) => {
 
 //employee results page
 app.get("/employee_results", (req, res) => {
-
+    let sql =  `SELECT employeetest.collectionTime, welltesting.result 
+        FROM welltesting
+        INNER JOIN (
+            SELECT employeetest.employeeID, employeetest.collectionTime, employeetest.testBarcode, poolmap.poolBarcode
+            FROM employeetest
+            INNER JOIN poolmap 
+                ON (employeetest.testbarcode = poolmap.testbarcode AND employeetest.employeeID = ${req.body.employeeID})) as fst
+        ON poolmap.poolBarcode = welltesting.poolBarcode`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
 })
 
 module.exports = app;
