@@ -44,6 +44,7 @@ class pollMapping extends Component {
                 poolBarcode: this.state.pool,
                 testBarcode: Object.keys(this.state.testBarcodes).map(key => this.state.testBarcodes[key]).join()
             }
+            body = JSON.stringify(body);
             fetch("http://localhost:8000/api/poolmapping", {
                 method: "POST",
                 headers: {
