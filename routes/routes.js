@@ -182,16 +182,13 @@ app.put("/welltesting", (req, res) => {
     })
 })
 
-//employee results page
+//employee results page 
 app.get("/employee_results", (req, res) => {
-    let sql =  `SELECT employeetest.collectionTime, welltesting.result 
-        FROM welltesting
-        INNER JOIN (
-            SELECT employeetest.employeeID, employeetest.collectionTime, employeetest.testBarcode, poolMap.poolBarcode
-            FROM employeetest
-            INNER JOIN poolMap 
-                ON (employeetest.testBarcode = poolmap.testBarcode AND employeetest.employeeID = ${req.body.employeeID})) as fst
-        ON poolmap.poolBarcode = welltesting.poolBarcode`;
+    let sql =  `SELECT fst.collectionTime, w.result FROM welltesting w
+        INNER JOIN (SELECT e.employeeID, e.collectionTime, e.testBarcode, p.poolBarcode
+            FROM employeetest e INNER JOIN poolMap p
+            ON (e.testBarcode = p.testBarcode AND e.employeeID = "${req.body.employeeID}")) as fst
+        ON fst.poolBarcode = w.poolBarcode;`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result);
