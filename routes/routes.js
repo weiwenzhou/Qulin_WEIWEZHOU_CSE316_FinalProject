@@ -191,7 +191,7 @@ app.get("/employee_results", (req, res) => {
         sql =  `SELECT fst.collectionTime, w.result FROM welltesting w
         INNER JOIN (SELECT e.employeeID, e.collectionTime, e.testBarcode, p.poolBarcode
             FROM employeetest e INNER JOIN poolMap p
-            ON (e.testBarcode = p.testBarcode AND e.employeeID = "${result}")) as fst
+            ON (e.testBarcode = p.testBarcode AND e.employeeID = "${result[0].employeeID}")) as fst
         ON fst.poolBarcode = w.poolBarcode;`;
         con.query(sql, function(err, result) {
             if (err) throw err;
