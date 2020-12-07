@@ -153,7 +153,7 @@ app.get("/welltesting", (req, res) => {
 })
 app.post("/welltesting", (req, res) => {
     let sql = `REPLACE INTO well(wellBarcode)
-        VALUES ('${req.body.poolBarcode}')`;
+        VALUES ('${req.body.wellBarcode}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, testingStartTime, testingEndTime, result)
