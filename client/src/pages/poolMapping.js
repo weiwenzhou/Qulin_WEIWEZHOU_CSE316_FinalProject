@@ -42,7 +42,7 @@ class pollMapping extends Component {
             e.preventDefault();
             let body = {
                 poolBarcode: this.state.pool,
-                testBarcodes: Object.keys(this.state.testBarcodes).map(key => this.state.testBarcodes[key]).join()
+                testBarcode: Object.keys(this.state.testBarcodes).map(key => this.state.testBarcodes[key]).join()
             }
             body = JSON.stringify(body);
             fetch("http://localhost:8000/api/testcollection", {
