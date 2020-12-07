@@ -82,6 +82,9 @@ function strSplit(str) {
 app.post("/poolmapping", (req, res) => {
     let sql = `REPLACE INTO pool (poolBarcode)
         VALUES ('${req.body.poolBarcode}')`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+    })
     let str = req.body.testBarcode;
     let arr = strSplit(str);
     arr.forEach(function (element) {
@@ -125,10 +128,15 @@ app.delete("/welltesting", (req, res) => {
         WHERE welltesting = '${req.body.wellBarcode}';`;
     con.query(sql, function(err, result) {
         if (err) throw err;
-        let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
+        let sql = `DELETE FROM well 
+            WHERE welltesting = '${req.body.wellBarcode}';`;
         con.query(sql, function(err, result) {
             if (err) throw err;
-            res.send(result);
+            let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
+            con.query(sql, function(err, result) {
+                if (err) throw err;
+                res.send(result);
+            })
         })
     })
 })
@@ -141,8 +149,13 @@ app.delete("/welltesting", (req, res) => {
 //     })
 // })
 app.post("/welltesting", (req, res) => {
-    let sql = `REPLACE INTO welltesting
-        SET '${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}'`;
+    let sql = `REPLACE INTO well(wellBarcode)
+        VALUES ('${req.body.poolBarcode}')`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+    })
+    let sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode)
+        VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result);
