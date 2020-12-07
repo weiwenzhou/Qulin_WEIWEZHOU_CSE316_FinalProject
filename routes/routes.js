@@ -86,14 +86,15 @@ app.post("/poolmapping", (req, res) => {
         if (err) throw err;
         let str = req.body.testBarcode;
         let arr = strSplit(str);
+        let sql = `REPLACE INTO poolMap(poolBarcode, testBarcode) 
+                VALUES ('${req.body.poolBarcode}', '${arr[0]}')`;
         arr.forEach(function (element) {
-            let sql = `REPLACE INTO poolMap(poolBarcode, testBarcode) 
-                VALUES ('${req.body.poolBarcode}', '${element}')`;
-            con.query(sql, function(err, result) {
-                if (err) throw err;
-                res.send(result);
-            })
+            let sql = sql + `, ('${req.body.poolBarcode}', '${element}')`;
         });
+        con.query(sql, function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        })
     })
 })
 app.delete("/poolmapping", (req, res) => {
