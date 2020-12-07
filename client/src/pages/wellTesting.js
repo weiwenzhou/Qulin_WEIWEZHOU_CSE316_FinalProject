@@ -42,7 +42,7 @@ class wellTesting extends Component {
                 result: this.state.result
             }
             body = JSON.stringify(body);
-            fetch("http://localhost:8000/api/welltesting", {
+            fetch("/api/welltesting", {
                 method: this.state.edit ? "PUT":"POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -62,7 +62,7 @@ class wellTesting extends Component {
                     wellBarcode: this.state.delete,
                 }
                 body = JSON.stringify(body);
-                fetch("http://localhost:8000/api/welltesting", {
+                fetch("/api/welltesting", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"
@@ -76,7 +76,7 @@ class wellTesting extends Component {
 
         this.getWells = async () => {
             // fetch to backend to get the tests in the table
-            fetch("http://localhost:8000/api/welltesting")
+            fetch("/api/welltesting")
                 .then(response => response.json())
                 .then(data => this.setState({wells: data}));
 

@@ -45,7 +45,7 @@ class pollMapping extends Component {
                 testBarcode: Object.keys(this.state.testBarcodes).map(key => this.state.testBarcodes[key]).join()
             }
             body = JSON.stringify(body);
-            fetch("http://localhost:8000/api/poolmapping", {
+            fetch("/api/poolmapping", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -62,7 +62,7 @@ class pollMapping extends Component {
                     poolBarcode: this.state.delete,
                 }
                 body = JSON.stringify(body);
-                fetch("http://localhost:8000/api/poolmapping", {
+                fetch("/api/poolmapping", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"
@@ -76,7 +76,7 @@ class pollMapping extends Component {
 
         this.getPools = async () => {
             // get pools 
-            fetch("http://localhost:8000/api/poolmapping")
+            fetch("/api/poolmapping")
                 .then(response => response.json())
                 .then(data => this.updateTable(data));
         }

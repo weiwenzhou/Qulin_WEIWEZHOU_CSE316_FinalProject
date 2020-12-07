@@ -23,7 +23,7 @@ class testCollection extends Component {
                 labID: this.props.match.params.userId
             }
             body = JSON.stringify(body);
-            fetch("http://localhost:8000/api/testcollection", {
+            fetch("/api/testcollection", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +40,7 @@ class testCollection extends Component {
                     testBarcode: this.state.delete,
                 }
                 body = JSON.stringify(body);
-                fetch("http://localhost:8000/api/testcollection", {
+                fetch("/api/testcollection", {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"
@@ -54,7 +54,7 @@ class testCollection extends Component {
 
         this.getTests = async () => {
             // fetch to backend to get the tests in the table
-            fetch("http://localhost:8000/api/testcollection")
+            fetch("/api/testcollection")
                 .then(response => response.json())
                 .then(data => this.setState({tests: data}));
 

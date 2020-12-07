@@ -18,7 +18,7 @@ class authenticationForm extends Component {
             if (this.props.action !== "LabTech Login Page") {
                 body = body.replace("id", "email");
             }
-            fetch("http://localhost:8000/api"+((this.props.action === "LabTech Login Page") ? "/labtech":"/employee"), {
+            fetch("/api"+((this.props.action === "LabTech Login Page") ? "/labtech":"/employee"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
