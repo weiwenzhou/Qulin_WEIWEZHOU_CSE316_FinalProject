@@ -153,13 +153,13 @@ app.post("/welltesting", (req, res) => {
         VALUES ('${req.body.poolBarcode}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
-    })
-    let sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, result)
-        VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}')`;
-    con.query(sql, function(err, result) {
-        if (err) throw err;
-        res.send(result);
-    })
+        sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, result)
+            VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}')`;
+        con.query(sql, function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        })
+    }) 
 })
 
 //employee results page
