@@ -84,18 +84,17 @@ app.post("/poolmapping", (req, res) => {
         VALUES ('${req.body.poolBarcode}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
-        res.send(result);
+        let str = req.body.testBarcode;
+        let arr = strSplit(str);
+        arr.forEach(function (element) {
+            let sql = `REPLACE INTO poolMap(poolBarcode, testBarcode) 
+                VALUES ('${req.body.poolBarcode}', '${element}')`;
+            con.query(sql, function(err, result) {
+                if (err) throw err;
+                res.send(result);
+            })
+        });
     })
-    let str = req.body.testBarcode;
-    let arr = strSplit(str);
-    arr.forEach(function (element) {
-        let sql = `REPLACE INTO poolMap(poolBarcode, testBarcode) 
-        VALUES ('${req.body.poolBarcode}', '${element}')`;
-        con.query(sql, function(err, result) {
-            if (err) throw err;
-            res.send(result);
-        })
-    });
 })
 app.delete("/poolmapping", (req, res) => {
     let sql = `DELETE FROM poolMap 
