@@ -82,9 +82,9 @@ function strSplit(str) {
 app.post("/poolmapping", (req, res) => {
     let str = req.body.testBarcode;
     let arr = strSplit(str);
-    arr.array.forEach(element => {
+    arr.forEach(function (element) {
         let sql = `REPLACE INTO poolMap 
-        SET '${req.body.poolBarcode}', ${element}`;
+        SET '${req.body.poolBarcode}', '${element}'`;
         con.query(sql, function(err, result) {
             if (err) throw err;
             res.send(result);
