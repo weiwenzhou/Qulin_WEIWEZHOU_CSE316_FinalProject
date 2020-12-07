@@ -184,8 +184,9 @@ app.put("/welltesting", (req, res) => {
 
 //employee results page 
 app.get("/employee_results", (req, res) => {
+    let email = req.url.split("=")[1]
     let id = "";
-    let sql = `SELECT email FROM employee WHERE email = '${req.body.employeeID}'`;
+    let sql = `SELECT email FROM employee WHERE email = '${email}'`;
     con.query(sql, function (err, result) {
         if (err) throw err;
         id = result;
