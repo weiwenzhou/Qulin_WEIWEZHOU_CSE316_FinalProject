@@ -96,7 +96,7 @@ app.post("/poolmapping", (req, res) => {
             res.send(result);
         })
     });
-    let sql = `SLECT * FROM poolmap`;
+    sql = `SLECT * FROM poolmap`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         res.send(result);
