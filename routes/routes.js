@@ -174,7 +174,11 @@ app.put("/welltesting", (req, res) => {
         WHERE poolBarcode = '${req.body.poolBarcode}' AND wellBarcode = '${req.body.wellBarcode}'`;
     con.query(sql, function(err, result) {
         if (err) throw err;
-        res.send(result);
+        let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
+        con.query(sql, function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        })
     })
 })
 
@@ -183,10 +187,10 @@ app.get("/employee_results", (req, res) => {
     let sql =  `SELECT employeetest.collectionTime, welltesting.result 
         FROM welltesting
         INNER JOIN (
-            SELECT employeetest.employeeID, employeetest.collectionTime, employeetest.testBarcode, poolmap.poolBarcode
+            SELECT employeetest.employeeID, employeetest.collectionTime, employeetest.testBarcode, poolMap.poolBarcode
             FROM employeetest
-            INNER JOIN poolmap 
-                ON (employeetest.testbarcode = poolmap.testbarcode AND employeetest.employeeID = ${req.body.employeeID})) as fst
+            INNER JOIN poolMap 
+                ON (employeetest.testBarcode = poolmap.testBarcode AND employeetest.employeeID = ${req.body.employeeID})) as fst
         ON poolmap.poolBarcode = welltesting.poolBarcode`;
     con.query(sql, function(err, result) {
         if (err) throw err;
