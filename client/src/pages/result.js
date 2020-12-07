@@ -33,8 +33,8 @@ class Result extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.results.map((row) => {
-                                return (<tr>
+                            {this.state.results.map((row, index) => {
+                                return (<tr key={index}>
                                     <td>{row.collectionTime}</td>
                                     <td>{row.result}</td>
                                 </tr>)
