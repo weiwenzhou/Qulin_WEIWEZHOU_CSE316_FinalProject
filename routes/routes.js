@@ -144,14 +144,13 @@ app.delete("/welltesting", (req, res) => {
         })
     })
 })
-// app.post("/welltesting", (req, res) => {
-//     let sql = `INSERT IGNORE INTO welltesting (poolBarcode, wellBarcode, result) 
-//         VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result} ')`;
-//     con.query(sql, function(err, result) {
-//         if (err) throw err;
-//         res.send(result);
-//     })
-// })
+app.get("/welltesting", (req, res) => {
+    let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+})
 app.post("/welltesting", (req, res) => {
     let sql = `REPLACE INTO well(wellBarcode)
         VALUES ('${req.body.poolBarcode}')`;
