@@ -18,9 +18,7 @@ class pollMapping extends Component {
         this.updateBarcodes = (e) => {
             let prev = { ...this.state.testBarcodes };
             prev[e.target.name] = e.target.value;
-            console.log(prev)
             this.setState({testBarcodes: prev});
-            console.log(this.state.testBarcodes)
         }
         
         this.addRow = () => {
@@ -44,7 +42,7 @@ class pollMapping extends Component {
             e.preventDefault();
             let body = {
                 poolBarcode: this.state.pool,
-                testBarcodes: Object.keys(this.state.testBarcodes).map(key => this.state.testBarcodes[key]).join()
+                testBarcode: Object.keys(this.state.testBarcodes).map(key => this.state.testBarcodes[key]).join()
             }
             body = JSON.stringify(body);
             fetch("http://localhost:8000/api/testcollection", {
@@ -151,7 +149,7 @@ class pollMapping extends Component {
                         </tbody>        
                     </table>
                         <button>Edit Pool</button>
-                        <button onClick={this.delete}>Delete Pool</button>
+                        <button onClick={this.deletePool}>Delete Pool</button>
                     </center>
                 </div>
             </div>
