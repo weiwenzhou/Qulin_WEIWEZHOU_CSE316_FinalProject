@@ -18,9 +18,7 @@ class pollMapping extends Component {
         this.updateBarcodes = (e) => {
             let prev = { ...this.state.testBarcodes };
             prev[e.target.name] = e.target.value;
-            console.log(prev)
             this.setState({testBarcodes: prev});
-            console.log(this.state.testBarcodes)
         }
         
         this.addRow = () => {
@@ -151,7 +149,7 @@ class pollMapping extends Component {
                         </tbody>        
                     </table>
                         <button>Edit Pool</button>
-                        <button onClick={this.delete}>Delete Pool</button>
+                        <button onClick={this.deletePool}>Delete Pool</button>
                     </center>
                 </div>
             </div>
