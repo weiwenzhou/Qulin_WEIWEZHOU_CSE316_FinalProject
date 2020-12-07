@@ -81,14 +81,14 @@ function strSplit(str) {
 }
 app.post("/poolmapping", (req, res) => {
     let sql = `REPLACE INTO pool (poolBarcode)
-        SET '${req.body.poolBarcode}'`;
+        VALUES ('${req.body.poolBarcode}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         let str = req.body.testBarcode;
         let arr = strSplit(str);
         arr.forEach(function (element) {
             let sql = `REPLACE INTO poolMap
-            SET poolBarcode ='${req.body.poolBarcode}', testBarcode = '${element}';`;
+           VALUES ('${req.body.poolBarcode}', '${element}');`;
             con.query(sql, function(err, result) {
                 if (err) throw err;
             })
@@ -157,7 +157,7 @@ app.post("/welltesting", (req, res) => {
     con.query(sql, function(err, result) {
         if (err) throw err;
         sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, testingStartTime, testingEndTime, result)
-            SET poolBarcode = '${req.body.poolBarcode}', wellBarcode = '${req.body.wellBarcode}', testingStartTime = CURDATE(), testingEndTime = CURDATE(), result = '${req.body.result}')`;
+            VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', CURDATE(), CURDATE(), '${req.body.result}')`;
         con.query(sql, function(err, result) {
             if (err) throw err;
             let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
@@ -167,6 +167,15 @@ app.post("/welltesting", (req, res) => {
             })
         })
     }) 
+})
+app.put("/welltesting", (req, res) => {
+    let sql = `UPDATE welltesting
+        SET result = '${req.body.result}', testingStartTime = CURDATE(), testingEndTime = CURDATE()
+        WHERE poolBarcode = '${req.body.poolBarcode}' AND wellBarcode = '${req.body.wellBarcode}'`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
 })
 
 //employee results page
