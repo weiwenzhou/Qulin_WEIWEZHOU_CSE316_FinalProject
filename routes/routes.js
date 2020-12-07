@@ -81,14 +81,14 @@ function strSplit(str) {
 }
 app.post("/poolmapping", (req, res) => {
     let sql = `REPLACE INTO pool (poolBarcode)
-        VALUES ('${req.body.poolBarcode}')`;
+        SET '${req.body.poolBarcode}'`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         let str = req.body.testBarcode;
         let arr = strSplit(str);
         arr.forEach(function (element) {
-            let sql = `REPLACE INTO poolMap(poolBarcode, testBarcode) 
-            VALUES ('${req.body.poolBarcode}', '${element}')`;
+            let sql = `REPLACE INTO poolMap
+            SET poolBarcode ='${req.body.poolBarcode}', result = '${element}';`;
             con.query(sql, function(err, result) {
                 if (err) throw err;
             })
