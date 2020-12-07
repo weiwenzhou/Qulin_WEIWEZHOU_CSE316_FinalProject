@@ -162,7 +162,11 @@ app.post("/welltesting", (req, res) => {
             VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}')`;
         con.query(sql, function(err, result) {
             if (err) throw err;
-            res.send(result);
+            let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
+            con.query(sql, function(err, result) {
+                if (err) throw err;
+                res.send(result);
+            })
         })
     }) 
 })
