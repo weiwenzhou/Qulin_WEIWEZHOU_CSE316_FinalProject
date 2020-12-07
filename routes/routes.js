@@ -129,11 +129,11 @@ app.get("/poolmapping", (req, res) => {
 //well testing
 app.delete("/welltesting", (req, res) => {
     let sql = `DELETE FROM welltesting 
-        WHERE welltesting = '${req.body.wellBarcode}';`;
+        WHERE wellBarcode = '${req.body.wellBarcode}';`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         let sql = `DELETE FROM well 
-            WHERE welltesting = '${req.body.wellBarcode}';`;
+            WHERE wellBarcode = '${req.body.wellBarcode}';`;
         con.query(sql, function(err, result) {
             if (err) throw err;
             let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
@@ -156,8 +156,8 @@ app.post("/welltesting", (req, res) => {
         VALUES ('${req.body.poolBarcode}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
-        sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, result)
-            VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}')`;
+        sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, testingStartTime, testingEndTime, result)
+            VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', CURDATE(), CURDATE(), ' ${req.body.result}')`;
         con.query(sql, function(err, result) {
             if (err) throw err;
             let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
