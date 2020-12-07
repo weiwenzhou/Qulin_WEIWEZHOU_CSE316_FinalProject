@@ -88,7 +88,7 @@ app.post("/poolmapping", (req, res) => {
         let arr = strSplit(str);
         arr.forEach(function (element) {
             let sql = `REPLACE INTO poolMap
-            SET poolBarcode ='${req.body.poolBarcode}', result = '${element}';`;
+            SET poolBarcode ='${req.body.poolBarcode}', testBarcode = '${element}';`;
             con.query(sql, function(err, result) {
                 if (err) throw err;
             })
@@ -157,7 +157,7 @@ app.post("/welltesting", (req, res) => {
     con.query(sql, function(err, result) {
         if (err) throw err;
         sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, testingStartTime, testingEndTime, result)
-            VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', CURDATE(), CURDATE(), '${req.body.result}')`;
+            SET poolBarcode = '${req.body.poolBarcode}', wellBarcode = '${req.body.wellBarcode}', testingStartTime = CURDATE(), testingEndTime = CURDATE(), result = '${req.body.result}')`;
         con.query(sql, function(err, result) {
             if (err) throw err;
             let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
