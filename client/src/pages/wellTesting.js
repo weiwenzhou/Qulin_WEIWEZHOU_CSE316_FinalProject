@@ -9,10 +9,28 @@ class wellTesting extends Component {
             result: "in progress",
             delete: "",
             wells: [],
+            edit: false,
         }
         
         this.onChange = (e) => {
             this.setState({[e.target.name]: e.target.value});
+        }
+
+        this.edit = () => {
+            // when edit button is clicked
+            if (this.state.delete !== "") {
+                this.setState({edit: true});
+                // set wellBarcode/poolBarcode/result to match row 
+                // wellBarcode = delete
+                for (let i = 0; i < this.state.wells.length; i++) {
+                    let well = this.state.wells[i];
+                    if (well.wellBarcode === this.state.delete) {
+                        this.setState({wellBarcode: well.wellBarcode})
+                        this.setState({poolBarcode: well.poolBarcode})
+                        this.setState({result: well.result})
+                    }
+                }
+            }
         }
 
         this.add = async (e) => {
@@ -25,13 +43,16 @@ class wellTesting extends Component {
             }
             body = JSON.stringify(body);
             fetch("http://localhost:8000/api/welltesting", {
-                method: "POST",
+                method: this.state.edit ? "PUT":"POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: body
             }).then(response => response.json())
             .then(data => this.setState({wells: data}));
+            if (this.state.edit) {
+                this.setState({edit: false});
+            }
         }
 
         this.delete = async () => {
@@ -70,7 +91,7 @@ class wellTesting extends Component {
     render() {
         return (
             <div>
-                <h2>Test Collection</h2>
+                <h2>Well Testing</h2>
                 <div>
                     <form onSubmit={e => this.add(e)}>
                         <div>
@@ -89,7 +110,7 @@ class wellTesting extends Component {
                             <option value="positive">positive</option>
                             </select>
                         </div>
-                        <button>Add</button>
+                        <button>{this.state.edit ? "Edit":"Add"}</button>
                     </form>
                 </div>
                 <div>
@@ -113,7 +134,7 @@ class wellTesting extends Component {
                             })}
                         </tbody>        
                     </table>
-                        <button>Edit Button</button>
+                        <button onClick={this.edit}>Edit Button</button>
                         <button onClick={this.delete}>Delete</button>
                     </center>
                 </div>
