@@ -87,7 +87,7 @@ app.post("/poolmapping", (req, res) => {
         let str = req.body.testBarcode;
         let arr = strSplit(str);
         arr.forEach(function (element) {
-            let sql = `REPLACE INTO poolMap
+            let sql = `REPLACE INTO poolMap (poolBarcode, testBarcode)
            VALUES ('${req.body.poolBarcode}', '${element}');`;
             con.query(sql, function(err, result) {
                 if (err) throw err;
