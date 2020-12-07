@@ -154,7 +154,7 @@ app.post("/welltesting", (req, res) => {
     con.query(sql, function(err, result) {
         if (err) throw err;
     })
-    let sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode)
+    let sql = `REPLACE INTO welltesting (poolBarcode, wellBarcode, result)
         VALUES ('${req.body.poolBarcode}', '${req.body.wellBarcode}', ' ${req.body.result}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
