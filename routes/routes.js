@@ -79,12 +79,13 @@ app.get("/testcollection", (req, res) => {
 function strSplit(str) {
     return str.split(",");
 }
+console.log(strSplit("123,456,789"));
 app.post("/poolmapping", (req, res) => {
     let str = req.body.testBarcode;
     let arr = strSplit(str);
     arr.forEach(function (element) {
-        let sql = `REPLACE INTO poolMap 
-        SET '${req.body.poolBarcode}', '${element}'`;
+        let sql = `REPLACE INTO poolMap(poolBarcode, testBarcode) 
+        VALUES ('${req.body.poolBarcode}', '${element}')`;
         con.query(sql, function(err, result) {
             if (err) throw err;
             res.send(result);
@@ -118,7 +119,11 @@ app.delete("/welltesting", (req, res) => {
         WHERE welltesting = '${req.body.wellBarcode}';`;
     con.query(sql, function(err, result) {
         if (err) throw err;
-        res.send(result);
+        let sql = `SELECT wellBarcode, poolBarcode, result FROM welltesting`;
+        con.query(sql, function(err, result) {
+            if (err) throw err;
+            res.send(result);
+        })
     })
 })
 // app.post("/welltesting", (req, res) => {
