@@ -84,6 +84,7 @@ app.post("/poolmapping", (req, res) => {
         VALUES ('${req.body.poolBarcode}')`;
     con.query(sql, function(err, result) {
         if (err) throw err;
+        res.send(result);
     })
     let str = req.body.testBarcode;
     let arr = strSplit(str);
