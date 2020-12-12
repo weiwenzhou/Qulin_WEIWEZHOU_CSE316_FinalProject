@@ -56,7 +56,8 @@ class testCollection extends Component {
             // fetch to backend to get the tests in the table
             fetch("/api/testcollection")
                 .then(response => response.json())
-                .then(data => this.setState({tests: data}));
+                .then(data => this.setState({tests: data}))
+                .catch(error => console.log("error", error));
 
             // console.log("stuff", this.state.tests);
         }
