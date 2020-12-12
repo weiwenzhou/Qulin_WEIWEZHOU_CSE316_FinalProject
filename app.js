@@ -18,10 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 // Database connection
 let con =  null;
 if (process.env.NODE_ENV === 'production') {
-    con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+    con = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
 } else {
     const dbConfig = require("./db.config.js");
-    con = mysql.createConnection({
+    con = mysql.createPool({
         host: dbConfig.HOST,
         user: dbConfig.USER,
         password: dbConfig.PASSWORD,
