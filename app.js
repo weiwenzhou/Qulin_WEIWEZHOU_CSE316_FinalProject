@@ -37,6 +37,9 @@ if (process.env.NODE_ENV === 'production') {
 // })
 global.con = con;
 
+// API routes
+app.use("/api", routes);
+
 // connection with client setup
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
@@ -50,8 +53,6 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-// API routes
-app.use("/api", routes);
 
 // PORT
 const PORT = process.env.PORT || 8000
