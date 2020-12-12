@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const express = require("express");
 const app = express();
 const cors = require('cors');
+const path = require('path');
 
 const routes = require("./routes/routes")
 
